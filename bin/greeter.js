@@ -1,14 +1,34 @@
-var Student = (function () {
-    function Student(firstName, middleInitial, lastName) {
-        this.firstName = firstName;
-        this.middleInitial = middleInitial;
-        this.lastName = lastName;
-        this.fullName = firstName + " " + middleInitial + " " + lastName;
+var client = {
+    id: '1',
+    firstName: 'John',
+    lastName: 'Wick'
+};
+var clients = [
+    client,
+    {
+        id: '2',
+        firstName: 'Miles',
+        lastName: 'Morales'
     }
-    return Student;
+];
+var newClient = { id: '', firstName: '', lastName: '' };
+var initialClientsState = {
+    clients: clients,
+    currentClient: newClient
+};
+var Store = (function () {
+    function Store(state) {
+        this.state = state;
+    }
+    Store.prototype.getState = function () {
+        return this.state;
+    };
+    Store.prototype.select = function (key) {
+        return this.state[key];
+    };
+    return Store;
 }());
-function greeter(person) {
-    return "Hello, " + person.firstName + " " + person.lastName;
-}
-var user = new Student("Jane", "M.", "User");
-document.body.innerHTML = greeter(user);
+var clientsStore = new Store(initialClientsState);
+var currentClient = clientsStore.select('currentClient');
+var appDiv = document.getElementById('app');
+appDiv.innerHTML = "<pre>" + JSON.stringify(currentClient, null, 2) + "</pre>";
