@@ -1,9 +1,9 @@
-var client = {
+const client = {
     id: '1',
     firstName: 'John',
     lastName: 'Wick'
 };
-var clients = [
+const clients = [
     client,
     {
         id: '2',
@@ -11,24 +11,23 @@ var clients = [
         lastName: 'Morales'
     }
 ];
-var newClient = { id: '', firstName: '', lastName: '' };
-var initialClientsState = {
-    clients: clients,
+const newClient = { id: '', firstName: '', lastName: '' };
+const initialClientsState = {
+    clients,
     currentClient: newClient
 };
-var Store = (function () {
-    function Store(state) {
+class Store {
+    constructor(state) {
         this.state = state;
     }
-    Store.prototype.getState = function () {
+    getState() {
         return this.state;
-    };
-    Store.prototype.select = function (key) {
+    }
+    select(key) {
         return this.state[key];
-    };
-    return Store;
-}());
-var clientsStore = new Store(initialClientsState);
-var currentClient = clientsStore.select('currentClient');
-var appDiv = document.getElementById('app');
-appDiv.innerHTML = "<pre>" + JSON.stringify(currentClient, null, 2) + "</pre>";
+    }
+}
+const clientsStore = new Store(initialClientsState);
+const currentClient = clientsStore.select('currentClient');
+const appDiv = document.getElementById('app');
+appDiv.innerHTML = `<pre>${JSON.stringify(currentClient, null, 2)}</pre>`;
